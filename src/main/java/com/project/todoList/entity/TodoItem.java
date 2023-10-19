@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "todo_items_table")
 @Data
@@ -18,6 +20,7 @@ public class TodoItem {
 
     private String title;
     private String information;
-    private boolean isCompleted;
+    private String dueTo;
+    private String isCompleted;
 
 }
