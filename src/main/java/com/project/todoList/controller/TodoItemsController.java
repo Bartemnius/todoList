@@ -3,6 +3,7 @@ package com.project.todoList.controller;
 import com.project.todoList.entity.TodoItem;
 import com.project.todoList.repository.TodoItemsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,14 @@ public class TodoItemsController {
         List<TodoItem> todoItems = repository.findAll();
         ModelAndView mav = new ModelAndView("todo-items-list");
         mav.addObject("todoItems", todoItems);
+        return mav;
+    }
+
+    @GetMapping("/addItem")
+    public ModelAndView getAddItem() {
+        ModelAndView mav = new ModelAndView("add-item");
+        TodoItem newItem = new TodoItem();
+        mav.addObject("newItem", newItem);
         return mav;
     }
 
