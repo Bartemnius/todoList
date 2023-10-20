@@ -28,7 +28,7 @@
                 <tr th:each="todoItem : ${todoItems}">
                     <td th:text="${todoItem.title}"></td>
                     <td th:text="${todoItem.information}"></td>
-                    <td th:text="${todoItem.dueTo}"></td>
+                    <td th:text="${todoItem.date}"></td>
                     <td th:text="${todoItem.isCompleted}"></td>
                 </tr>
             </tbody>

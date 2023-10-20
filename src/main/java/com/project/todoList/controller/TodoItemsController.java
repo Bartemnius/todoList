@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -16,7 +19,7 @@ public class TodoItemsController {
     @Autowired
     private TodoItemsRepository repository;
 
-    @GetMapping("/")
+    @GetMapping({"/", "/todoItemsList"})
     public ModelAndView getTodoItemsList() {
         List<TodoItem> todoItems = repository.findAll();
         ModelAndView mav = new ModelAndView("todo-items-list");
@@ -30,6 +33,13 @@ public class TodoItemsController {
         TodoItem newItem = new TodoItem();
         mav.addObject("newItem", newItem);
         return mav;
+    }
+
+    @PostMapping("/saveItem")
+    public String saveItem(@ModelAttribute TodoItem newItem) {
+        newItem.setIsCompleted("Not done");
+        repository.save(newItem);
+        return "redirect:/todoItemsList";
     }
 
 }
