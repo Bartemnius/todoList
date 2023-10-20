@@ -22,6 +22,7 @@
                     <th>Information</th>
                     <th>Due to</th>
                     <th>Is done</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,11 @@
                     <td th:text="${todoItem.information}"></td>
                     <td th:text="${todoItem.date}"></td>
                     <td th:text="${todoItem.isCompleted}"></td>
+                    <td class="w-20">
+                        <a class="btn btn-success" th:href="@{/done}">Done</a>
+                        <a class="btn btn-primary" th:href="@{/updateItem}">Update</a>
+                        <a class="btn btn-danger" th:href="@{/deleteItem(todoItemId=${todoItem.id})}">Delete</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
