@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class TodoItemsController {
@@ -18,6 +21,7 @@ public class TodoItemsController {
     @GetMapping({"/", "/todoItemsList"})
     public ModelAndView getTodoItemsList() {
         List<TodoItem> todoItems = repository.findAll();
+        todoItems = todoItems.stream().filter(item -> item.getIsCompleted().equals("Not done")).collect(Collectors.toList());
         ModelAndView mav = new ModelAndView("todo-items-list");
         mav.addObject("todoItems", todoItems);
         return mav;
@@ -54,4 +58,11 @@ public class TodoItemsController {
         return "redirect:/todoItemsList";
     }
 
+    @GetMapping("/done")
+    public String done(@RequestParam Long todoItemId) {
+        TodoItem todoItem = repository.findById(todoItemId).get();
+        todoItem.setIsCompleted("Completed on: " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        repository.save(todoItem);
+        return "redirect:/todoItemsList";
+    }
 }
