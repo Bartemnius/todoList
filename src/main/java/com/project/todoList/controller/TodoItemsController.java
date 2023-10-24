@@ -3,7 +3,6 @@ package com.project.todoList.controller;
 import com.project.todoList.entity.TodoItem;
 import com.project.todoList.repository.TodoItemsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +27,16 @@ public class TodoItemsController {
     public String deleteItem(@RequestParam Long todoItemId) {
         repository.deleteById(todoItemId);
         return "redirect:/todoItemsList";
+    }
+
+
+    //Name of the item has to be the same as the one in addItem, so it will populate properly
+    @GetMapping("/updateItem")
+    public ModelAndView updateItem(@RequestParam Long todoItemId) {
+        TodoItem newItem = repository.findById(todoItemId).get();
+        ModelAndView mav = new ModelAndView("add-item");
+        mav.addObject("newItem", newItem);
+        return mav;
     }
 
     @GetMapping("/addItem")

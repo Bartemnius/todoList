@@ -16,6 +16,8 @@
             <input type="text" th:field="*{title}" placeholder="Todo Item title" class="form-control mb-2" maxlength="50"/>
             <input type="text" th:field="*{information}" placeholder="Add some information" class="form-control mb-2"/>
             <input type="text" th:field="*{date}" placeholder="Due to date" class="form-control mb-2"/>
+<!--            field added so when update happens it will update old item and not create new one with new id-->
+            <input type="hidden" th:field="*{id}">
             <button class="btn btn-primary" type="submit">Add Item</button>
         </form>
         <a th:href="@{/}" class="btn btn-secondary mt-2">Go back to item list</a>
