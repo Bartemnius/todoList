@@ -61,8 +61,18 @@ public class TodoItemsController {
     @GetMapping("/done")
     public String done(@RequestParam Long todoItemId) {
         TodoItem todoItem = repository.findById(todoItemId).get();
-        todoItem.setIsCompleted("Completed on: " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        LocalDateTime.now().toLocalDate();
+        todoItem.setIsCompleted("Completed on: " + LocalDateTime.now().toLocalDate());
         repository.save(todoItem);
         return "redirect:/todoItemsList";
+    }
+
+    @GetMapping("/history")
+    public ModelAndView history() {
+        List<TodoItem> todoItems = repository.findAll();
+        todoItems = todoItems.stream().filter(item -> !item.getIsCompleted().equals("Not done")).collect(Collectors.toList());
+        ModelAndView mav = new ModelAndView("todo-items-history");
+        mav.addObject("todoItems", todoItems);
+        return mav;
     }
 }
