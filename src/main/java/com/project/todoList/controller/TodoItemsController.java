@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,7 +60,6 @@ public class TodoItemsController {
     @GetMapping("/done")
     public String done(@RequestParam Long todoItemId) {
         TodoItem todoItem = repository.findById(todoItemId).get();
-        LocalDateTime.now().toLocalDate();
         todoItem.setIsCompleted("Completed on: " + LocalDateTime.now().toLocalDate());
         repository.save(todoItem);
         return "redirect:/todoItemsList";
